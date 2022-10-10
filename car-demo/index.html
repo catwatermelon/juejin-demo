@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>云看车</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        /* 隐藏body窗口区域滚动条 */
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
+    <script src="https://82mou.github.io/threejs/js/OrbitControls.js"></script>
+    <!-- 引入obj模型加载库OBJLoader.js -->
+    <script src="http://www.yanhuangxueyuan.com/threejs/examples/js/loaders/OBJLoader.js"></script>
+    <!-- 引入obj模型材质加载库MTLLoader.js -->
+    <script src="http://www.yanhuangxueyuan.com/threejs/examples/js/loaders/MTLLoader.js"></script>
+
+    <script>
+      /**
+       * 创建场景对象Scene
+       */
+      var scene = new THREE.Scene();
+
+      /**
+       * 光源设置
+       */
+
+      var mtlLoader = new THREE.MTLLoader(); //材质文件加载器
+      mtlLoader.setCrossOrigin("Anonymous");
+      mtlLoader.setPath("./static/5/");
+      mtlLoader.load("file.mtl", function (materials) {
+        materials.preload();
+        var objLoader = new THREE.OBJLoader(); //obj加载器
+        //   // 返回一个包含材质的对象MaterialCreator
+        objLoader.setMaterials(materials);
+        objLoader.setPath("./static/5/");
+        objLoader.load("file.obj", function (obj) {
+          scene.add(obj);
+
+          //环境光
+          var ambient = new THREE.AmbientLight(0x777777);
+          scene.add(ambient);
+
+          var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+          // 设置光源的方向：通过光源position属性和目标指向对象的position属性计算
+          directionalLight.position.set(200, 100, 200);
+          directionalLight.target = obj;
+          scene.add(directionalLight);
+        });
+      });
+
+      /**
+       * 相机设置
+       */
+      var width = window.innerWidth; //窗口宽度
+      var height = window.innerHeight; //窗口高度
+      var k = width / height; //窗口宽高比
+      var s = 100; //三维场景显示范围控制系数，系数越大，显示的范围越大
+      //创建相机对象
+      var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+      camera.position.set(100, 100, 100); //设置相机位置
+      camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
+      /**
+       * 创建渲染器对象
+       */
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(width, height); //设置渲染区域尺寸
+      renderer.setClearColor(0xccbaaa, 1); //设置背景颜色
+      document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
+      //执行渲染操作   指定场景、相机作为参数
+      renderer.render(scene, camera);
+      function render() {
+        renderer.render(scene, camera); //执行渲染操作
+        scene.rotateY(0.01); //每次绕y轴旋转0.01弧度
+        requestAnimationFrame(render); //请求再次执行渲染函数render
+      }
+      render();
+      var controls = new THREE.OrbitControls(camera, renderer.domElement); //创建控件对象
+    </script>
+  </body>
+</html>
