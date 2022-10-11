@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #710c19;
+      }
+      section {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        transform-style: preserve-3d;
+        perspective: 500px;
+      }
+      section h2 {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        line-height: 100vh;
+        font-size: 10vw;
+        color: #fff;
+        font-weight: 700;
+        z-index: 999;
+      }
+      .banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .banner .blocks {
+        position: relative;
+        display: block;
+        width: 10vw;
+        height: 10vh;
+        animation: animate 2s ease-in-out forwards;
+        /* animation-delay: 1s; */
+      }
+      @keyframes animate {
+        0% {
+          /* transform: translate3d(2000px); */
+          background: url(./static/1.png);
+          background-position: center;
+          background-attachment: fixed;
+          /* background-size: cover; */
+          box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        100% {
+          /* transform: translate3d(0px); */
+          background: url(./static/1.png);
+          background-position: center;
+          background-attachment: fixed;
+          background-size: cover;
+          /* border: 1px solid rgba(0,0,0,.1); */
+          /* box-shadow: 0 5px 15px rgba(0,0,0,0); */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h2>CatWatermelon</h2>
+      <div class="banner">
+        <div class="blocks"></div>
+       </div>
+    </section>
+    <script>
+        const banner = document.getElementsByClassName('banner')[0];
+        const blocks = document.getElementsByClassName('blocks');
+        for(var i=1; i<100; ++i) {
+            banner.innerHTML += "<div class='blocks'></div>";
+            const duration = Math.random() * 5;
+            // blocks[i].style.animationDuration = 2 + duration + 's';
+            blocks[i].style.animationDelay = duration + 's';
+        }
+    </script>
+  </body>
+</html>
