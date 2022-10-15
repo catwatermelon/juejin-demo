@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Itim", cursive;
+        min-height: 100vh;
+        background-color: rgb(13, 110, 100);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        user-select: none;
+      }
+      .info {
+        display: flex;
+        justify-content: flex-start;
+      }
+      .title {
+        margin-right: 100px;
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 1em;
+      }
+      .time {
+        color: red;
+      }
+      .score-board {
+        color: yellow;
+      }
+      .container {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        border: 3px solid rgb(237, 202, 136);
+      }
+      .container div {
+        min-width: 80px;
+        min-height: 80px;
+        border: 2px solid orange;
+        cursor: pointer;
+      }
+      .score2 {
+        background: url(./static/2.png);
+        background-size: cover;
+      }
+      .score3 {
+        background: url(./static/3.png);
+        background-size: cover;
+      }
+      .score1 {
+        background: url(./static/1.png);
+        background-size: cover;
+      }
+      .btn-group {
+        margin-top: 1em;
+        display: flex;
+      }
+      .btn {
+        margin-left: 1em;
+        background-color: orange;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #fff;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .modal {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+      .modal .modal-title {
+        font-weight: bold;
+        font-size: 30px;
+        color: yellow;
+      }
+
+      .hide {
+        display: none;
+      }
+      .modal-container {
+        background-color: #57c2c1;
+        border-radius: 6px;
+        padding: 30px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-container .btn {
+        margin-top: 1em;
+        margin-left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="modal hide">
+      <div class="modal-container">
+        <div class="modal-title">游戏结束</div>
+        <div class="modal-content">
+          你的得分是：<span class="final-score">0</span> 分
+        </div>
+        <div class="btn again-btn">再来一次</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="title">Score: <span class="score-board">0</span></div>
+      <div class="title">Time: <span class="time">0</span></div>
+    </div>
+    <div class="container">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="btn-group">
+      <div class="btn start-btn">开始游戏</div>
+      <div class="btn restart-btn">重新游戏</div>
+    </div>
+    <script>
+      // 抽取一张图片
+      const getOnePic = (() => {
+        const scores = ["score1", "score2", "score3"];
+        return () => {
+          const index = Math.floor(Math.random() * 3);
+          return scores[index];
+        };
+      })();
+
+      window.onload = () => {
+        const GAME_TIME = 5;
+        let existIndex = new Map(); // 场上图片及对应索引
+        let currentScore = 0; // 当前得分
+        let scoreBoard = document.querySelector(".score-board"); // 得分表
+
+        let grids = Array.from(document.querySelectorAll(".container div"));
+        grids.forEach((g) => {
+          g.addEventListener("click", () => {
+            const c = g.classList;
+            // hit
+            if (c && c.length) {
+              currentScore += +c[0].replace("score", "");
+            } else {
+              currentScore--;
+            }
+            scoreBoard.innerHTML = currentScore;
+          });
+        });
+
+        const appearOne = (grids) => {
+          // 抽一个格子
+          const index = Math.floor(Math.random() * 36);
+          // 移除之前的照片
+          if (existIndex.has(index)) {
+            grids[index].classList.remove(existIndex.get(index));
+          }
+
+          // 抽新照片并存储
+          const pic = getOnePic();
+
+          // 移除场上所有该图片
+          for (const [k, v] of existIndex) {
+            if (v === pic) {
+              grids[k].classList.remove(v);
+            }
+          }
+          // 该图片入场
+          existIndex.set(index, pic);
+          grids[index].classList.add(pic);
+
+          // 1 秒后移除图片
+          let timer = setTimeout(() => {
+            grids[index].classList.remove(pic);
+            timer = null;
+          }, 1000);
+        };
+
+        // 游戏结束
+        let time = document.querySelector(".time");
+        let currentTime = GAME_TIME;
+        let timeSt = null;
+        // 倒计时
+        const timeInterval = () => {
+          clearInterval(timeSt);
+          timeSt = setInterval(() => {
+            currentTime--;
+            time.innerHTML = currentTime;
+            if (!currentTime) {
+              clearInterval(timeSt);
+              timeSt = null;
+
+              clearInterval(appearSt);
+              appearSt = null;
+
+              let s = document.querySelector(".final-score");
+              s.innerHTML = currentScore;
+              toggleModal(true);
+            }
+          }, 1000);
+        };
+
+        const toggleModal = (flag) => {
+          let m = document.querySelector(".final-score");
+          let method = flag ? "remove" : "add";
+          m.classList[method]("hide");
+        };
+
+        // 重置游戏数据
+        const gameInfoReset = () => {
+          currentTime = GAME_TIME;
+          time.innerHeight = currentTime;
+          currentScore = 0;
+          scoreBoard.innerHTML = currentScore;
+
+          // 移除场上所有该图片
+          for (const [k, v] of existIndex) {
+            grids[k].classList.remove(v);
+          }
+        };
+
+        // 重新游戏
+        const gameRestart = () => {
+          toggleModal(true);
+          gameStart();
+        };
+        const restartBtn = document.querySelector(".restart-btn");
+        restartBtn.addEventListener("click", gameRestart);
+
+        let appearSt = null;
+        // 游戏开始
+        const gameStart = () => {
+          gameInfoReset();
+          clearInterval(appearSt);
+          appearSt = null;
+          appearSt = setInterval(() => {
+            appearOne(grids);
+          }, 300);
+          timeInterval();
+        };
+        let startBtn = document.querySelector(".start-btn");
+        startBtn.addEventListener("click", gameRestart);
+
+        let againBtn = document.querySelector(".again-btn");
+        againBtn.addEventListener("click", () => {
+          gameRestart();
+        });
+      };
+    </script>
+  </body>
+</html>
