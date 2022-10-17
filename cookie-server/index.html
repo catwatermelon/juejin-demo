@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <button id="login">登录</button>
+    <button id="send">发起请求</button>
+    <button id="set-cookie">浏览器端设置 Cookie</button>
+    <script>
+      const sendBtn = document.querySelector("#send");
+      sendBtn.addEventListener("click", () => {
+        axios.get("http://localhost:3000/test", {
+          withCredentials: true,
+        });
+      });
+
+      const loginBtn = document.querySelector("#login");
+      loginBtn.addEventListener("click", () => {
+        axios.get("http://localhost:3000/login", {
+          withCredentials: true,
+        });
+      });
+
+      const setCookieBtn = document.querySelector("#set-cookie");
+      setCookieBtn.addEventListener("click", () => {
+        document.cookie = "add=newcookie;path=''";
+      });
+    </script>
+  </body>
+</html>
