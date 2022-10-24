@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(45deg, #8460ed, #ff1252);
+      }
+      .menu {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .menu li {
+        list-style: none;
+        position: absolute;
+        left: 0px;
+        transform: rotate(0deg) translateX(80px);
+        transform-origin: 100px;
+        transition: 0.5s;
+        transition-delay: calc(0.1s * var(--i));
+      }
+      .menu.active li {
+        transform: rotate(calc(var(--i) * 45deg));
+      }
+      .menu li a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        background-color: #fff;
+        border-radius: 50%;
+        transform: rotate(calc(var(--i) * -45deg));
+        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+      }
+      .toggle {
+        font-size: 2em;
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <div class="toggle">+</div>
+      <li style="--i: 0">
+        <a href="#">
+          <img src="./static/8.png" alt="" />
+        </a>
+      </li>
+      <li style="--i: 1">
+        <a href="#">
+          <img src="./static/1.png" alt="" />
+        </a>
+      </li>
+      <li style="--i: 2">
+        <a href="#">
+          <img src="./static/2.png" alt="" />
+        </a>
+      </li>
+      <li style="--i: 3">
+        <a href="#">
+          <img src="./static/3.png" alt="" />
+        </a>
+      </li>
+      <li style="--i: 4">
+        <a href="#">
+          <img src="./static/4.png" alt="" />
+        </a>
+      </li>
+      <li style="--i: 5">
+        <a href="#">
+          <img src="./static/5.png" alt="" />
+        </a>
+      </li>
+      <li style="--i: 6">
+        <a href="#">
+          <img src="./static/6.png" alt="" />
+        </a>
+      </li>
+      <li style="--i: 7">
+        <a href="#">
+          <img src="./static/7.png" alt="" />
+        </a>
+      </li>
+    </div>
+    <script>
+      const toggleBtn = document.querySelector(".toggle");
+      const menu = document.querySelector(".menu");
+      toggleBtn.onclick = () => {
+        menu.classList.toggle("active");
+      };
+    </script>
+  </body>
+</html>
