@@ -49,7 +49,7 @@
         border: 2px solid orange;
         cursor: pointer;
       }
-      .score2 {
+      /* .score2 {
         background: url(./static/2.png);
         background-size: cover;
       }
@@ -59,6 +59,21 @@
       }
       .score1 {
         background: url(./static/1.png);
+        background-size: cover;
+      } */
+      .score2 {
+        background-color: red;
+        /* background: url(https://p3-passport.byteimg.com/img/user-avatar/8db3fdff9a85ee60ad0e6706b6632064~180x180.awebp); */
+        background-size: cover;
+      }
+      .score3 {
+        background-color: green;
+        /* background: url(https://p3-passport.byteimg.com/img/user-avatar/6cd5915df47110ea932c1a1910569532~180x180.awebp); */
+        background-size: cover;
+      }
+      .score1 {
+        background-color: orange;
+        /* background: url(https://p3-passport.byteimg.com/img/user-avatar/7e4a7c01e7022917f7242419f19a6c03~180x180.awebp); */
         background-size: cover;
       }
       .btn-group {
@@ -177,7 +192,7 @@
         };
       })();
 
-      window.onload = () => {
+      window.addEventListener("load", () => {
         const GAME_TIME = 5;
         let existIndex = new Map(); // 场上图片及对应索引
         let currentScore = 0; // 当前得分
@@ -294,7 +309,7 @@
         againBtn.addEventListener("click", () => {
           gameRestart();
         });
-      };
+      });
     </script>
   </body>
 </html>
