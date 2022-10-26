@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: #1d1f20;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <script>
+      const c = document.querySelector("#c");
+      const ctx = c.getContext("2d");
+      c.height = window.innerHeight;
+      c.width = window.innerWidth;
+      const words = ["0", "1"];
+      const fontSize = 16;
+      const columns = Math.floor(c.width / fontSize);
+
+      const getText = (words) => {
+        return words[Math.floor(Math.random() * words.length)];
+      };
+      const drops = new Array(columns).fill(0);
+      const draw = () => {
+        ctx.fillStyle = "rgba(0,0,0,0.05)";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        ctx.fillStyle = "red";
+        ctx.font = `${fontSize}px arial`;
+        for (let i = 0; i < drops.length; ++i) {
+          ctx.fillText(getText(words), i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > c.height && Math.random() > 0.95)
+            drops[i] = 0;
+          drops[i]++;
+        }
+      };
+      setInterval(draw, 120);
+    </script>
+  </body>
+</html>
