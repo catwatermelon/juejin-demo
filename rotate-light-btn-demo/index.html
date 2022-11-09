@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(78, 228, 140);
+        gap: 10px;
+      }
+      div {
+        width: 100px;
+        height: 100px;
+        box-shadow: 16px 14px 20px #0000047b;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      div::before {
+        content: "";
+        background-image: conic-gradient(#ff0052 10deg, transparent 120deg);
+        width: 150%;
+        height: 150%;
+        position: absolute;
+        animation: rotate 1.5s linear infinite;
+      }
+      div::after {
+        content: attr(data-name);
+        width: 90px;
+        height: 90px;
+        background-color: #6dddf3;
+        box-shadow: inset 10px 7px 10px #00000432;
+        position: absolute;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: large;
+      }
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div data-name="button1"></div>
+    <div data-name="button2"></div>
+    <div data-name="button3"></div>
+  </body>
+</html>

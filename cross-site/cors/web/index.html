@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <button id="get-btn">发送 Get 请求</button>
+    <script>
+      const getData = () => {
+        axios({
+          url: "http://localhost:3000/users",
+          method: "put",
+        }).then((res) => {
+          console.log(res.data);
+        });
+      };
+
+      const btn = document.querySelector("#get-btn");
+      btn.addEventListener("click", getData);
+    </script>
+  </body>
+</html>

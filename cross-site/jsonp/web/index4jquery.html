@@ -1,0 +1,39 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-28 13:42:37
+ * @LastEditTime: 2021-01-03 14:49:10
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \jsonp-test\web\index4jquery.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+  <body>
+    <button id="get-btn">发送 Get 请求</button>
+    <script>
+      const getData = () => {
+        $.ajax({
+          url: "http://localhost:3000/users", //请求地址
+          dataType: "jsonp", //发送jsonp请求必须指定数据类型为jsonp
+          jsonp: "cb", //服务器接收回调函数的参数名如callback ,cb等等默认callback
+          // jsonpCallback: "myCb", //默认jQuery123545_43456。。。。的随机字符串，可以自定义
+          success: function (data) {
+            console.log(data);
+          },
+          fail: function (err) {
+            console.log(err);
+          },
+        });
+      };
+
+      const btn = document.querySelector("#get-btn");
+      btn.addEventListener("click", getData);
+    </script>
+  </body>
+</html>
